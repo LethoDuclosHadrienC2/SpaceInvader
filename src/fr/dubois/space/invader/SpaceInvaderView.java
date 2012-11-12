@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -22,7 +23,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
 public class SpaceInvaderView extends View {
 	
 	// Dimensions souhaitées
@@ -31,6 +31,13 @@ public class SpaceInvaderView extends View {
 
 	private Paint paint; // Style pour le texte	
 	private String text; // texte à afficher
+	
+	// Modifier par Mathieu DOUHET
+		private static final int ENNEMI_BLUE = 1;
+		private static final int ENNEMI_RED = 2; 
+		private static final int VAISSEAU = 3;
+		private static final int MISSILE_VAI = 4;
+		private static final int MISSILE_ENN = 5;
 
 
 	public SpaceInvaderView(Context context) {
@@ -60,11 +67,6 @@ public class SpaceInvaderView extends View {
 		paint.setTextAlign(Paint.Align.CENTER);
 		text = "Texte";
 	}
-
-
-
-
-
 
 
 
@@ -98,4 +100,22 @@ public class SpaceInvaderView extends View {
 		this.setMeasuredDimension(x,y);
 	}
 
+	// Modifier par Mathieu DOUHET 
+		 public void loadTile(int key, Drawable tile) {
+		        Bitmap bitmap = Bitmap.createBitmap(mTileSize, mTileSize, Bitmap.Config.ARGB_8888);
+		        Canvas canvas = new Canvas(bitmap);
+		        tile.setBounds(0, 0, mTileSize, mTileSize);
+		        tile.draw(canvas);
+		        
+		        mTileArray[key] = bitmap;
+		        
+		        setFocusable(true);
+
+		        Resources r = this.getContext().getResources();
+		        
+		        resetTiles(4);
+		        loadTile(RED_STAR, r.getDrawable(R.drawable.redstar));
+		        loadTile(YELLOW_STAR, r.getDrawable(R.drawable.yellowstar));
+		        loadTile(GREEN_STAR, r.getDrawable(R.drawable.greenstar));
+		    }	 
 }
