@@ -38,6 +38,7 @@ public class SpaceInvaderView extends View {
 		private static final int VAISSEAU = 3;
 		private static final int MISSILE_VAI = 4;
 		private static final int MISSILE_ENN = 5;
+		
 
 
 	public SpaceInvaderView(Context context) {
@@ -99,23 +100,30 @@ public class SpaceInvaderView extends View {
 		int y = computeSize(heightMeasureSpec,TARGET_HEIGHT);
 		this.setMeasuredDimension(x,y);
 	}
+	
 
 	// Modifier par Mathieu DOUHET 
-		 public void loadTile(int key, Drawable tile) {
-		        Bitmap bitmap = Bitmap.createBitmap(mTileSize, mTileSize, Bitmap.Config.ARGB_8888);
-		        Canvas canvas = new Canvas(bitmap);
-		        tile.setBounds(0, 0, mTileSize, mTileSize);
-		        tile.draw(canvas);
-		        
-		        mTileArray[key] = bitmap;
-		        
-		        setFocusable(true);
+	
+	public Bitmap loadImage(int key){
+		Drawable image;
+		int x,y;
+		Bitmap bitmap;
+		
+		Resources r = this.getContext().getResources();
+		image=r.getDrawable(key);
+		x=image.getIntrinsicWidth();
+	    y=image.getIntrinsicHeight();
+	    bitmap = Bitmap.createBitmap(x,y,null);
+	    Canvas canvas = new Canvas(bitmap);
+	    image.setBounds(0,0,x,y);
+        image.draw(canvas);
+	    return bitmap;
+			
+		
+	}
 
-		        Resources r = this.getContext().getResources();
-		        
-		        resetTiles(4);
-		        loadTile(RED_STAR, r.getDrawable(R.drawable.redstar));
-		        loadTile(YELLOW_STAR, r.getDrawable(R.drawable.yellowstar));
-		        loadTile(GREEN_STAR, r.getDrawable(R.drawable.greenstar));
-		    }	 
+	private void resetImage(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 }
