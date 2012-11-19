@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -23,8 +24,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+
 public class SpaceInvaderView extends View {
 	
+	Alien alien;
 	// Dimensions souhaitées
 	private static final int TARGET_HEIGHT = 800;
 	private static final int TARGET_WIDTH = 600;
@@ -59,6 +62,7 @@ public class SpaceInvaderView extends View {
 		paint.setTextSize(36);
 		paint.setTextAlign(Paint.Align.CENTER);
 		text = "Texte";
+		this.alien= new Alien(alienbitmap,0,0);
 	}
 
 
