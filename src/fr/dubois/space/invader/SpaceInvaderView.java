@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -62,21 +64,21 @@ public class SpaceInvaderView extends View {
 	}
 
 
+	 private RefreshHandler mRedrawHandler = new RefreshHandler();
 
+	    class RefreshHandler extends Handler {
 
+	        @Override
+	        public void handleMessage(Message msg) {
+	            SpaceInvaderView.this.update();
+	            SpaceInvaderView.this.invalidate();
+	        }
 
-
-
-
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		canvas.drawRGB(0, 0, 0);
-		canvas.drawRect(0, 0, TARGET_WIDTH-1, TARGET_HEIGHT-1, paint);
-		if (text != null){
-			canvas.drawText(text, canvas.getWidth()/2,canvas.getHeight()/2, paint);
-		}
-	}
+	        public void sleep(long delayMillis) {
+	        	this.removeMessages(0);
+	            sendMessageDelayed(obtainMessage(0), delayMillis);
+	        }
+	    };
 
 
 	private int computeSize(int spec,int def){
@@ -89,6 +91,11 @@ public class SpaceInvaderView extends View {
 		//		MeasureSpec.AT_MOST
 		if (size < def ) return size;
 		return def;
+	}
+
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
