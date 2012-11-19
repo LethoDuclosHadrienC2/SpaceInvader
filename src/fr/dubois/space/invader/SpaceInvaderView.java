@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -22,7 +23,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
 public class SpaceInvaderView extends View {
 	
 	// Dimensions souhaitées
@@ -31,6 +31,14 @@ public class SpaceInvaderView extends View {
 
 	private Paint paint; // Style pour le texte	
 	private String text; // texte à afficher
+	
+	// Modifier par Mathieu DOUHET
+		private static final int ENNEMI_BLUE = 1;
+		private static final int ENNEMI_RED = 2; 
+		private static final int VAISSEAU = 3;
+		private static final int MISSILE_VAI = 4;
+		private static final int MISSILE_ENN = 5;
+		
 
 
 	public SpaceInvaderView(Context context) {
@@ -63,11 +71,6 @@ public class SpaceInvaderView extends View {
 
 
 
-
-
-
-
-
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -97,5 +100,30 @@ public class SpaceInvaderView extends View {
 		int y = computeSize(heightMeasureSpec,TARGET_HEIGHT);
 		this.setMeasuredDimension(x,y);
 	}
+	
 
+	// Modifier par Mathieu DOUHET 
+	
+	public Bitmap loadImage(int key){
+		Drawable image;
+		int x,y;
+		Bitmap bitmap;
+		
+		Resources r = this.getContext().getResources();
+		image=r.getDrawable(key);
+		x=image.getIntrinsicWidth();
+	    y=image.getIntrinsicHeight();
+	    bitmap = Bitmap.createBitmap(x,y,null);
+	    Canvas canvas = new Canvas(bitmap);
+	    image.setBounds(0,0,x,y);
+        image.draw(canvas);
+	    return bitmap;
+			
+		
+	}
+
+	private void resetImage(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 }
