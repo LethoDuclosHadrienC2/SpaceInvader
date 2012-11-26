@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 
+import android.app.Activity;
+
+
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -25,8 +28,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+
+
+
+
 public class SpaceInvaderView extends View {
 	
+	Alien alien;
 	// Dimensions souhaitées
 	private static final int TARGET_HEIGHT = 800;
 	private static final int TARGET_WIDTH = 600;
@@ -69,24 +78,12 @@ public class SpaceInvaderView extends View {
 		paint.setTextSize(36);
 		paint.setTextAlign(Paint.Align.CENTER);
 		text = "Texte";
+
+		Bitmap alienbitmap = loadImage(R.drawable.enemibleu);
+		this.alien= new Alien(alienbitmap,0,0);
 	}
 
 
-	 private RefreshHandler mRedrawHandler = new RefreshHandler();
-
-	    class RefreshHandler extends Handler {
-
-	        @Override
-	        public void handleMessage(Message msg) {
-	            SpaceInvaderView.this.update();
-	            SpaceInvaderView.this.invalidate();
-	        }
-
-	        public void sleep(long delayMillis) {
-	        	this.removeMessages(0);
-	            sendMessageDelayed(obtainMessage(0), delayMillis);
-	        }
-	    };
 
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -99,7 +96,6 @@ public class SpaceInvaderView extends View {
 	}
 
 
-
 	private int computeSize(int spec,int def){
 		int mode = View.MeasureSpec.getMode(spec);
 		if (mode == View.MeasureSpec.UNSPECIFIED) return def;
@@ -110,11 +106,6 @@ public class SpaceInvaderView extends View {
 		//		MeasureSpec.AT_MOST
 		if (size < def ) return size;
 		return def;
-	}
-
-	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
