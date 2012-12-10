@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 
+
 import android.app.Activity;
 
 
@@ -67,8 +68,28 @@ public class SpaceInvaderView extends View {
 		init();
 	}
 
+//Modifié par Nathan Boncourre
+	private RefreshHandler mRedrawHandler = new RefreshHandler();
 
-	
+    class RefreshHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            SpaceInvaderView.this.update();
+            SpaceInvaderView.this.invalidate();
+        }
+
+        public void sleep(long delayMillis) {
+        	this.removeMessages(0);
+            sendMessageDelayed(obtainMessage(0), delayMillis);
+        }
+        
+        public void update(){
+        	 mRedrawHandler.sleep(40);
+        	 alien.act();
+        };
+        
+    };
 
 	void init(){
 		paint = new Paint();
@@ -84,6 +105,11 @@ public class SpaceInvaderView extends View {
 	}
 
 
+
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
